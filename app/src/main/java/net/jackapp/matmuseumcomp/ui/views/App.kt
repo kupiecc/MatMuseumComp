@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.jackapp.matmuseumcomp.data.json.MuseumItem
-import net.jackapp.matmuseumcomp.data.viewdata.MuseumViewData
+import net.jackapp.matmuseumcomp.data.resultdata.MuseumViewData
 import net.jackapp.matmuseumcomp.viewmodels.MuseumViewModel
 
 @Composable

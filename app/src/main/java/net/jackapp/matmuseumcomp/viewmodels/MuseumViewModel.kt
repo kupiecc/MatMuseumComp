@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import net.jackapp.matmuseumcomp.data.json.MuseumItem
-import net.jackapp.matmuseumcomp.data.viewdata.MuseumViewData
-import net.jackapp.matmuseumcomp.usecase.MuseumUseCase
+import net.jackapp.matmuseumcomp.data.resultdata.MuseumViewData
+import net.jackapp.matmuseumcomp.usecase.GetItemUseCase
 
 class MuseumViewModel(
-    private val museumUseCase: MuseumUseCase
+    private val getItemUseCase: GetItemUseCase
 ) : ViewModel() {
 
     private val _museumViewData = MutableSharedFlow<MuseumViewData>()
@@ -17,22 +17,9 @@ class MuseumViewModel(
 
     fun getMuseumItem() {
         viewModelScope.launch {
-            isLoading()
-            result(museumUseCase.getFirstAvailableItem())
+            _museumViewData.emit(MuseumViewData.Loading)
+            _museumViewData.emit(getItemUseCase.getFirstAvailableItem())
         }
-    }
-
-    private suspend fun result(it: MuseumItem?) {
-        _museumViewData.emit(
-                if (it == null)
-                    MuseumViewData.Error("Huston! We have a problem!")
-                else
-                    MuseumViewData.Success(listOf(it))
-            )
-    }
-
-    private suspend fun isLoading() {
-        _museumViewData.emit(MuseumViewData.Loading)
     }
 
 }

@@ -1,12 +1,12 @@
 package net.jackapp.matmuseumcomp.repositories
 
-import net.jackapp.matmuseumcomp.data.json.MuseumItem
-import net.jackapp.matmuseumcomp.data.json.MuseumItemsSummary
+import net.jackapp.matmuseumcomp.data.resultdata.MuseumItemResult
+import net.jackapp.matmuseumcomp.data.resultdata.MuseumSummaryResult
 
 interface MuseumRepository {
 
-    suspend fun fetchItemById(id: String): MuseumItem?
+    suspend fun fetchItemById(id: String): MuseumItemResult
 
-    suspend fun fetchAllIds(): MuseumItemsSummary?
+    suspend fun fetchAllIds(): MuseumSummaryResult
 
 }
