@@ -1,4 +1,4 @@
-package net.jackapp.matmuseumcomp.ui.theme
+package net.jackapp.matmuseumcomp.presentation.theme
 
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme

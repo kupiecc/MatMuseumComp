@@ -1,4 +1,4 @@
-package net.jackapp.matmuseumcomp.services
+package net.jackapp.matmuseumcomp.data.services
 
 import net.jackapp.matmuseumcomp.data.json.MuseumItem
 import net.jackapp.matmuseumcomp.data.json.MuseumSummary

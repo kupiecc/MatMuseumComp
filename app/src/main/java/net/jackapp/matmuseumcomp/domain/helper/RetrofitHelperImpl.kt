@@ -1,6 +1,6 @@
-package net.jackapp.matmuseumcomp.helper
+package net.jackapp.matmuseumcomp.domain.helper
 
-import net.jackapp.matmuseumcomp.services.MuseumService
+import net.jackapp.matmuseumcomp.data.services.MuseumService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

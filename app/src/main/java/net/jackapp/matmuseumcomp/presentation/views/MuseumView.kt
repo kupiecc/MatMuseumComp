@@ -1,4 +1,4 @@
-package net.jackapp.matmuseumcomp.ui.views
+package net.jackapp.matmuseumcomp.presentation.views
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,12 +17,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.jackapp.matmuseumcomp.data.json.MuseumItem
-import net.jackapp.matmuseumcomp.data.resultdata.MuseumViewData
-import net.jackapp.matmuseumcomp.viewmodels.MuseumViewModel
+import net.jackapp.matmuseumcomp.data.json.MuseumSummary
+import net.jackapp.matmuseumcomp.data.viewdata.MuseumViewData
+import net.jackapp.matmuseumcomp.presentation.viewmodels.MuseumViewModel
 
 @Composable
-fun Museum(viewModel: MuseumViewModel) {
-    val museumViewDataStateFlow = viewModel.museumViewData.collectAsState(MuseumViewData.Loading)
+fun MuseumView(viewModel: MuseumViewModel) {
+    val museumViewDataStateFlow = viewModel.museumItemFlow.collectAsState(MuseumViewData.Loading)
 
     Scaffold(
         topBar = {
@@ -43,15 +44,23 @@ private fun MuseumResult(museumViewData: MuseumViewData) {
             .fillMaxSize()
     ) {
         when (museumViewData) {
-            is MuseumViewData.Success ->
-                MuseumListView(museumViewData.items)
+            is MuseumViewData.SuccessItem ->
+                MuseumListView(listOf(museumViewData.item))
+            is MuseumViewData.SuccessSummary ->
+                MuseumSummaryView(museumViewData.summary)
             is MuseumViewData.Error ->
-                Error(museumViewData.message)
+                ErrorView(museumViewData.message)
             is MuseumViewData.Loading ->
                 ProgressIndicator()
-            is MuseumViewData.Empty ->
-                Welcome()
         }
+    }
+}
+
+@Composable
+fun MuseumSummaryView(summary: MuseumSummary) {
+    Column {
+        Text(text = summary.total.toString())
+        Text(text = summary.objectIDs.toString())
     }
 }
 
@@ -65,7 +74,7 @@ fun MuseumListView(items: List<MuseumItem>) {
 }
 
 @Composable
-private fun Error(message: String) {
+private fun ErrorView(message: String) {
     Text(
         text = message,
         fontSize = 22.sp,
@@ -84,14 +93,6 @@ private fun ProgressIndicator() {
 }
 
 @Composable
-private fun Welcome() {
-    Text(
-        modifier = Modifier.padding(16.dp),
-        text = "Hello World!"
-    )
-}
-
-@Composable
 private fun TopBarTitle() {
     Text(
         text = "MatMuseum",
@@ -104,5 +105,7 @@ private fun TopBarTitle() {
 @Preview(widthDp = 400, heightDp = 800, showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MuseumResult(museumViewData = MuseumViewData.Error("error message"))
+    val ids = listOf(1,2,3,4,5,6)
+    val museumSummary = MuseumSummary(objectIDs = ids, total = ids.size)
+    MuseumResult(museumViewData = MuseumViewData.SuccessSummary(museumSummary))
 }
