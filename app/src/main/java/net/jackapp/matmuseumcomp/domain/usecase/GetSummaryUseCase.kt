@@ -4,7 +4,7 @@ import net.jackapp.matmuseumcomp.data.viewdata.MuseumViewData
 import net.jackapp.matmuseumcomp.data.response.ResourceResponse
 import net.jackapp.matmuseumcomp.domain.repositories.MuseumRepository
 
-class GetSummaryUseCase(
+open class GetSummaryUseCase(
     private val museumRepository: MuseumRepository
 ) {
 
