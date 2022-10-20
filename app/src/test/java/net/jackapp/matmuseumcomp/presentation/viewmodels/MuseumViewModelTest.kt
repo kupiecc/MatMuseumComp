@@ -1,6 +1,7 @@
 package net.jackapp.matmuseumcomp.presentation.viewmodels
 
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineStart
@@ -15,8 +16,6 @@ import net.jackapp.matmuseumcomp.domain.usecase.GetSummaryUseCase
 import net.jackapp.matmuseumcomp.domain.usecase.MuseumUseCases
 import net.jackapp.matmuseumcomp.factory.TestDataFactory.createMuseumItem
 import net.jackapp.matmuseumcomp.factory.TestDataFactory.createMuseumSummary
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsEqual.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -62,7 +61,7 @@ internal class MuseumViewModelTest {
             subject.museumItemFlow.test {
                 job.start()
                 val item = awaitItem()
-                assertThat(item, equalTo(itemResult))
+                assertThat(item).isEqualTo(itemResult)
                 cancelAndConsumeRemainingEvents()
             }
         }
@@ -81,7 +80,7 @@ internal class MuseumViewModelTest {
             subject.museumSummaryFlow.test {
                 job.start()
                 val summary = awaitItem()
-                assertThat(summary, equalTo(summaryResult))
+                assertThat(summary).isEqualTo(summaryResult)
                 cancelAndConsumeRemainingEvents()
             }
         }
