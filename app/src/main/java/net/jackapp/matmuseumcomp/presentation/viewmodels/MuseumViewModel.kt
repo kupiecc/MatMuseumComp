@@ -16,7 +16,13 @@ class MuseumViewModel(
     val museumItemFlow = _museumItemFlow.asSharedFlow()
 
     private val _museumSummaryFlow = MutableSharedFlow<MuseumViewData>()
-    val museumSummaryFlow = _museumItemFlow.asSharedFlow()
+    val museumSummaryFlow = _museumSummaryFlow.asSharedFlow()
+
+    fun getMuseumSummary() {
+        viewModelScope.launch {
+            _museumSummaryFlow.emit(museumUseCases.getSummaryUseCase())
+        }
+    }
 
     fun getMuseumItem() {
         viewModelScope.launch {
@@ -24,10 +30,5 @@ class MuseumViewModel(
         }
     }
 
-    fun getMuseumSummary() {
-        viewModelScope.launch {
-            _museumSummaryFlow.emit(museumUseCases.getSummaryUseCase())
-        }
-    }
 
 }
