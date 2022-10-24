@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import net.jackapp.matmuseumcomp.data.json.MuseumItem
 import net.jackapp.matmuseumcomp.data.json.MuseumSummary
 import net.jackapp.matmuseumcomp.data.viewdata.MuseumViewData
+import net.jackapp.matmuseumcomp.leetcode.LongestPalindromic
 import net.jackapp.matmuseumcomp.presentation.viewmodels.MuseumViewModel
 
 @Composable
@@ -32,7 +35,26 @@ fun MuseumView(viewModel: MuseumViewModel) {
             )
         }
     ) {
-         MuseumResult(museumViewDataStateFlow.value)
+        LongestPalindromicView()
+
+//         MuseumResult(museumViewDataStateFlow.value)
+    }
+}
+
+@Composable
+fun LongestPalindromicView() {
+    val longestPalindromic = remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+        Button(onClick = {
+            longestPalindromic.value = LongestPalindromic()
+                .longestPalindrome("baacabdkacaa")
+        }) {
+            Text(text = "Longest palindromic")
+        }
+        Text(text = longestPalindromic.value)
     }
 }
 
@@ -105,7 +127,7 @@ private fun TopBarTitle() {
 @Preview(widthDp = 400, heightDp = 800, showBackground = true)
 @Composable
 fun DefaultPreview() {
-    val ids = listOf(1,2,3,4,5,6)
+    val ids = listOf(1, 2, 3, 4, 5, 6)
     val museumSummary = MuseumSummary(objectIDs = ids, total = ids.size)
     MuseumResult(museumViewData = MuseumViewData.SuccessSummary(museumSummary))
 }
