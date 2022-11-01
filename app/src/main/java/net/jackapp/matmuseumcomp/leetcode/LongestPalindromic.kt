@@ -21,32 +21,74 @@ class LongestPalindromic {
     private var longestPalindromic = ""
 
     fun longestPalindrome(s: String): String {
-        val string = s.replace(" ", "")
+        val string =
+//          "SQQSYYSQQS"
+//          "aabbaacddddaaa"
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+//            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+//          "zudfweormatjycujjirzjpyrmaxurectxrtqedmmgergwdvjmjtstdhcihacqnothgttgqfywcpgnuvwglvfiuxteopoyizgehkwuvvkqxbnufkcbodlhdmbqyghkojrgokpwdhtdrwmvdegwycecrgjvuexlguayzcammupgeskrvpthrmwqaqsdcgycdupykppiyhwzwcplivjnnvwhqkkxildtyjltklcokcrgqnnwzzeuqioyahqpuskkpbxhvzvqyhlegmoviogzwuiqahiouhnecjwysmtarjjdjqdrkljawzasriouuiqkcwwqsxifbndjmyprdozhwaoibpqrthpcjphgsfbeqrqqoqiqqdicvybzxhklehzzapbvcyleljawowluqgxxwlrymzojshlwkmzwpixgfjljkmwdtjeabgyrpbqyyykmoaqdambpkyyvukalbrzoyoufjqeftniddsfqnilxlplselqatdgjziphvrbokofvuerpsvqmzakbyzxtxvyanvjpfyvyiivqusfrsufjanmfibgrkwtiuoykiavpbqeyfsuteuxxjiyxvlvgmehycdvxdorpepmsinvmyzeqeiikajopqedyopirmhymozernxzaueljjrhcsofwyddkpnvcvzixdjknikyhzmstvbducjcoyoeoaqruuewclzqqqxzpgykrkygxnmlsrjudoaejxkipkgmcoqtxhelvsizgdwdyjwuumazxfstoaxeqqxoqezakdqjwpkrbldpcbbxexquqrznavcrprnydufsidakvrpuzgfisdxreldbqfizngtrilnbqboxwmwienlkmmiuifrvytukcqcpeqdwwucymgvyrektsnfijdcdoawbcwkkjkqwzffnuqituihjaklvthulmcjrhqcyzvekzqlxgddjoir"
+//          "jkexvzsqshsxyytjmmhauoyrbxlgvdovlhzivkeixnoboqlfemfzytbolixqzwkfvnpacemgpotjtqokrqtnwjpjdiidduxdprngvitnzgyjgreyjmijmfbwsowbxtqkfeasjnujnrzlxmlcmmbdbgryknraasfgusapjcootlklirtilujjbatpazeihmhaprdxoucjkynqxbggruleopvdrukicpuleumbrgofpsmwopvhdbkkfncnvqamttwyvezqzswmwyhsontvioaakowannmgwjwpehcbtlzmntbmbkkxsrtzvfeggkzisxqkzmwjtbfjjxndmsjpdgimpznzojwfivgjdymtffmwtvzzkmeclquqnzngazmcfvbqfyudpyxlbvbcgyyweaakchxggflbgjplcftssmkssfinffnifsskmsstfclpjgblfggxhckaaewyygcbvblxypduyfqbvfcmzagnznquqlcemkzzvtwmfftmydjgvifwjoznzpmigdpjsmdnxjjfbtjwmzkqxsizkggefvztrsxkkbmbtnmzltbchepwjwgmnnawokaaoivtnoshywmwszqzevywttmaqvncnfkkbdhvpowmspfogrbmuelupcikurdvpoelurggbxqnykjcuoxdrpahmhiezaptabjjulitrilkltoocjpasugfsaarnkyrgbdbmmclmxlzrnjunjsaefkqtxbwoswbfmjimjyergjygzntivgnrpdxuddiidjpjwntqrkoqtjtopgmecapnvfkwzqxilobtyzfmeflqobonxiekvizhlvodvglxbryouahmmjtyyxshsqszvxekj"
+//          "xeeevvgrqunieginnvgvttbloinzpmoiaczszxswpmsxkhtnyrzimeckwndjnrvczcokshsachapcsbhijbbedfjnccqifibbumjchrarmvfoacdxwwkwrsnnebsdqksjmxzuwlpztltsgtllviztsqzzzzsrxkhmrugklfxinlkbdtgzaqgrrnplsbbtoqfrjwzqhwozesjqanifdswbtrkbtzkwtcodejwdorsdcairdodaluaafbviigevezrkovmcbswauhkvhrhzojdmlevuvfycjqntgpxtjtqqtjtxpgtnqjcyfvuvelmdjozhrhvkhuawsbcmvokrzevegiivbfaauladodriacdsrodwjedoctwkztbkrtbwsdfinaqjsezowhqzwjrfqotbbslpnrrgqazgtdbklnixflkgurmhkxrszzzzqstzivlltgstltzplwuzxmjskqdsbennsrwkwwxdcaofvmrarhcjmubbifiqccnjfdebbjihbscpahcashskoczcvrnjdnwkcemizrynthkxsmpwsxzszcaiompzniolbttvgvnnigeinuqrgvveeex"
+//          "aba"
+//           s.replace(" ", "")
         val lettersChecked = arrayListOf<Char>()
 
         if (string.all { it == string.first() })
             return string
 
         findSingleLetterString(string)
-
-        val wholeTime = measureTimeMillis {
-            val lettersArray = string.toCharArray().distinct()
-            lettersArray.forEach { char ->
-                if (lettersChecked.contains(char))
-                    return@forEach
-
-                lettersChecked.add(char)
-                findAllTextToTest(string, char)
-
-            }
+        val time = measureTimeMillis {
+            firstSolution(string, lettersChecked)
+//            secondSolution(string)
         }
-        println(">>> wholeTime = ${wholeTime}")
+        println(">>> time = ${time}")
 
         return longestPalindromic
     }
 
+    private fun firstSolution(string: String, lettersChecked: ArrayList<Char>) {
+        val lettersArray = string.toCharArray().distinct()
+        lettersArray.forEach { char ->
+            if (lettersChecked.contains(char))
+                return@forEach
+
+            lettersChecked.add(char)
+            findAllTextToTest(string, char)
+
+        }
+    }
+
+    private fun secondSolution(string: String) {
+        val letterIterator = string.toList().listIterator()
+        while (letterIterator.hasNext()) {
+            val letter = letterIterator.next()
+            val letterPosition = letterIterator.previousIndex()
+
+            if (letterPosition > longestPalindromic.length) {
+                for (position in 0..letterPosition) {
+                    val from = letterPosition - position
+                    val toEven = letterPosition + position + 1
+                    val toOdd = letterPosition + position + 2
+                    if (toEven <= string.length) {
+                        val evenWord = string.substring(from, toEven)
+                        if (isPalindromic(evenWord) && evenWord.length > longestPalindromic.length)
+                            longestPalindromic = evenWord
+                    }
+                    if (toOdd <= string.length) {
+                        val oddWord = string.substring(from, toOdd)
+                        if (isPalindromic(oddWord) && oddWord.length > longestPalindromic.length)
+                            longestPalindromic = oddWord
+
+                    }
+                }
+            }
+        }
+    }
+
     private fun findAllTextToTest(stringToTest: String, letter: Char) {
-        val letterPositions: List<Int> = getListOfLetterIndexes(stringToTest, letter)
+        val letterPositions: List<Int> = stringToTest.mapIndexedNotNull { index, c ->
+            index.takeIf { c.toLowerCase() == letter.toLowerCase() }
+        }
 
         if (letterPositions.size == 1) {
             if (longestPalindromic.isEmpty())
@@ -56,6 +98,8 @@ class LongestPalindromic {
 
         for (frameSize in letterPositions.size downTo 2) {
             val letterFrames = letterPositions.windowed(size = frameSize)
+            if (isAnyLongertWord(letterFrames))
+                return
             letterFrames.forEach { frame ->
                 val word = stringToTest.substring(frame.first(), frame.last() + 1)
                 if (isPalindromic(word) && word.length > longestPalindromic.length) {
@@ -66,8 +110,14 @@ class LongestPalindromic {
         }
     }
 
-    private fun getListOfLetterIndexes(stringToTest: String, letter: Char) = stringToTest.mapIndexedNotNull { index, c ->
-        index.takeIf { c.toLowerCase() == letter.toLowerCase() }
+    private fun isAnyLongertWord(letterFrames: List<List<Int>>): Boolean {
+        var longestDistance = 0
+        letterFrames.forEach {
+            val distance = it.last() - it.first()
+            if (distance > longestDistance)
+                longestDistance = distance
+        }
+        return longestDistance < longestPalindromic.length
     }
 
     private fun findSingleLetterString(stringToTest: String) {
