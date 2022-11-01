@@ -1,114 +1,113 @@
 package net.jackapp.matmuseumcomp.leetcode
 
+import kotlin.system.measureTimeMillis
+
+/*
+* Given a string s, return the longest palindromic substring in s.
+A string is called a palindrome string if the reverse of that string is the same as the original string.
+
+Example 1:
+Input: s = "babad"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
+
+* Example 2:
+Input: s = "cbbd"
+Output: "bb"
+* */
+
 class LongestPalindromic {
 
     private var longestPalindromic = ""
 
     fun longestPalindrome(s: String): String {
-        var decreasingString = s.replace(" ", "").toLowerCase()
+        val string = s.replace(" ", "")
         val lettersChecked = arrayListOf<Char>()
-        val words = arrayListOf<String>()
 
-        if (decreasingString.all { it == decreasingString.first() })
-            return decreasingString
+        if (string.all { it == string.first() })
+            return string
 
-        s.forEach { char ->
-            if (lettersChecked.contains(char))
-                return@forEach
+        findSingleLetterString(string)
 
-            lettersChecked.add(char)
-            findAllTextToTest(decreasingString, char, true)
-            findAllTextToTest(decreasingString, char, false)
+        val wholeTime = measureTimeMillis {
+            val lettersArray = string.toCharArray().distinct()
+            lettersArray.forEach { char ->
+                if (lettersChecked.contains(char))
+                    return@forEach
 
-            println(">>> longestPalindromic = ${longestPalindromic}")
-        }
+                lettersChecked.add(char)
+                findAllTextToTest(string, char)
 
-/*        while (decreasingString.isNotEmpty()) {
-            val firstChar = decreasingString.first { it !in lettersChecked }
-            val firstCharIndex = decreasingString.indexOfFirst { it !in lettersChecked }
-            val lastSameCharIndex = decreasingString.indexOfLast { it == firstChar }
-            var stringToTest = ""
-            if (lastSameCharIndex != -1) {
-                stringToTest = decreasingString.substring(firstCharIndex, lastSameCharIndex + 1)
-
-                if (isPalindromic(stringToTest)) {
-                    if (stringToTest.length == decreasingString.length &&
-                        stringToTest.length > longestPalindromic.length
-                    )
-                        return stringToTest
-
-                    if (longestPalindromic.length < stringToTest.length)
-                        longestPalindromic = stringToTest
-
-                    lettersChecked.add(stringToTest.first())
-                    decreasingString = decreasingString.drop(1)
-                } else {
-                    val innerText = decreasingString.substring(0, lastSameCharIndex)
-                    while (innerTextToTest(stringToTest).isNotEmpty()) {
-
-                    }
-                }
             }
-
-        }*/
+        }
+        println(">>> wholeTime = ${wholeTime}")
 
         return longestPalindromic
     }
 
-    //    "aacabdkacaa"
-    private fun findAllTextToTest(s: String, char: Char, lr: Boolean) {
-        var stringToTest = if (lr) s else s.reversed()
+    private fun findAllTextToTest(stringToTest: String, letter: Char) {
+        val letterPositions: List<Int> = getListOfLetterIndexes(stringToTest, letter)
 
-        while (stringToTest.count { it == char } > 2) {
-            val first = stringToTest.indexOfFirst { it == char }
-            val last = stringToTest.indexOfLast { it == char }
-            stringToTest = stringToTest.substring(first, last + 1)
+        if (letterPositions.size == 1) {
+            if (longestPalindromic.isEmpty())
+                longestPalindromic = stringToTest[letterPositions.first()].toString()
+            else return
+        }
 
-            if (isPalindromic(stringToTest) && stringToTest.length > longestPalindromic.length)
-                longestPalindromic = stringToTest
-
-//            stringToTest = if (i) stringToTest.drop(1) else stringToTest.dropLast(1)
+        for (frameSize in letterPositions.size downTo 2) {
+            val letterFrames = letterPositions.windowed(size = frameSize)
+            letterFrames.forEach { frame ->
+                val word = stringToTest.substring(frame.first(), frame.last() + 1)
+                if (isPalindromic(word) && word.length > longestPalindromic.length) {
+                    longestPalindromic = word
+                    return@forEach
+                }
+            }
         }
     }
 
-    private fun findText(string: String, c: Char): String {
-        return if (string.count { it == c } >= 2) {
-            val firstSameCharIndex = string.indexOfFirst { it == c }
-            val lastSameCharIndex = string.indexOfLast { it == c }
-            string.substring(firstSameCharIndex, lastSameCharIndex + 1)
-        } else ""
+    private fun getListOfLetterIndexes(stringToTest: String, letter: Char) = stringToTest.mapIndexedNotNull { index, c ->
+        index.takeIf { c.toLowerCase() == letter.toLowerCase() }
     }
 
-/*    private fun innerTextToTest(s: String): String {
-        val firstLetter = s.first()
-        val lastSameCharIndex = decreasingString.indexOfLast { it == firstChar }
-        var decreasingText = s
-        return if (s.count { it == firstLetter } >= 2) {
+    private fun findSingleLetterString(stringToTest: String) {
+        val stringIterator = stringToTest.iterator()
+        val sb = StringBuilder()
+        while (stringIterator.hasNext()) {
+            val char = stringIterator.next()
+            if (sb.isEmpty() || sb.contains(char))
+                sb.append(char)
+            else {
+                setIfLongestWord(sb.toString())
+                sb.clear()
+                sb.append(char)
+            }
+        }
+        setIfLongestWord(sb.toString())
+    }
 
+    private fun setIfLongestWord(sb: String) {
+        if (sb.length > longestPalindromic.length)
+            longestPalindromic = sb
+    }
+
+    private fun isPalindromic(string: String): Boolean {
+        val part1: String
+        val part2: String
+
+        if (string.all { it == string.first() })
+            return true
+
+        val isEven = string.length % 2 == 0
+        if (isEven) {
+            part1 = string.substring(0, string.length / 2)
+            part2 = string.substring(string.length / 2, string.length)
         } else {
-            ""
-        }
-    }*/
-
-    private fun isPalindromic(s: String): Boolean {
-        var decreasingString = s
-
-        while (decreasingString.isNotEmpty() && decreasingString.first() == decreasingString.last()) {
-            decreasingString = decreasingString.drop(1).dropLast(1)
-            val isEven = decreasingString.length % 2 == 0
-            if (isEven && decreasingString.isEmpty() || !isEven && decreasingString.length == 1)
-                return true
+            part1 = string.substring(0, (string.length - 1) / 2)
+            part2 = string.substring((string.length + 1) / 2, string.length)
         }
 
-        return false
+        return part1 == part2.reversed()
     }
 
-    private fun findInnerWordToTest(s: String): String {
-        var anotherWordToTest = s
-        while (anotherWordToTest.isNotEmpty() && anotherWordToTest.first() != anotherWordToTest.last()) {
-            anotherWordToTest = anotherWordToTest.dropLast(1)
-        }
-
-        return anotherWordToTest
-    }
 }

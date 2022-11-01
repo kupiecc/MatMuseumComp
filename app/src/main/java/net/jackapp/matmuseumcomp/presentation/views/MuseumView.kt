@@ -6,7 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -35,8 +40,8 @@ fun MuseumView(viewModel: MuseumViewModel) {
             )
         }
     ) {
+//        ShimmerView()
         LongestPalindromicView()
-
 //         MuseumResult(museumViewDataStateFlow.value)
     }
 }
@@ -50,7 +55,7 @@ fun LongestPalindromicView() {
     ) {
         Button(onClick = {
             longestPalindromic.value = LongestPalindromic()
-                .longestPalindrome("baacabdkacaa")
+                .longestPalindrome("aacabdkacaa")
         }) {
             Text(text = "Longest palindromic")
         }

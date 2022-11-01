@@ -3,6 +3,7 @@ package net.jackapp.matmuseumcomp.presentation.theme
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 
 
@@ -29,8 +30,12 @@ fun MatMuseumCompTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colors = LightColorScheme,
+        colors = DefaultLightThemeColor,
     ) {
         content()
     }
 }
+val themeColor: Colors
+    @Composable
+    @ReadOnlyComposable
+    get() = MaterialTheme.colors
