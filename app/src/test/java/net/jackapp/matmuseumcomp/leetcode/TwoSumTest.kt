@@ -39,4 +39,32 @@ internal class TwoSumTest {
 
         assertThat(result).isEqualTo(listOf(0, 1).toIntArray())
     }
+
+    @Test
+    fun `Given TwoSum, When Input nums array 0,4,3,0 and target = 0, Then output should be array 0, 3`() {
+        val inputNums = listOf(0,4,3,0).toIntArray()
+
+        val result = subject.twoSum(inputNums, 0)
+
+        assertThat(result).isEqualTo(listOf(0, 3).toIntArray())
+    }
+
+    @Test
+    fun `Given TwoSum, When Input nums array -3,4,3,90 and target = 0, Then output should be array 0, 2`() {
+        val inputNums = listOf(-3,4,3,90).toIntArray()
+
+        val result = subject.twoSum(inputNums, 0)
+
+        assertThat(result).isEqualTo(listOf(0, 2).toIntArray())
+    }
+
+    @Test
+    fun `Given TwoSum, When Input nums array 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 20 and target = 20, Then output should be array 10, 61`() {
+        val inputNums = listOf(1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 20).toIntArray()
+
+        val result = subject.twoSum(inputNums, 20)
+
+        assertThat(result).isEqualTo(listOf(10, 61).toIntArray())
+    }
+
 }

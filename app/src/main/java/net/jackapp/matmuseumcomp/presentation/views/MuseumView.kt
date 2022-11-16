@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import net.jackapp.matmuseumcomp.data.json.MuseumItem
 import net.jackapp.matmuseumcomp.data.json.MuseumSummary
 import net.jackapp.matmuseumcomp.data.viewdata.MuseumViewData
-import net.jackapp.matmuseumcomp.leetcode.LongestPalindromic
+import net.jackapp.matmuseumcomp.leetcode.TwoSum
 import net.jackapp.matmuseumcomp.presentation.viewmodels.MuseumViewModel
 
 @Composable
@@ -41,25 +41,26 @@ fun MuseumView(viewModel: MuseumViewModel) {
         }
     ) {
 //        ShimmerView()
-        LongestPalindromicView()
+        LeetCodeView()
 //         MuseumResult(museumViewDataStateFlow.value)
     }
 }
 
 @Composable
-fun LongestPalindromicView() {
-    val longestPalindromic = remember { mutableStateOf("") }
+fun LeetCodeView() {
+    val valueUnderTest = remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
         Button(onClick = {
-            longestPalindromic.value = LongestPalindromic()
-                .longestPalindrome("aacabdkacaa")
+            val range = 0..100000
+            val array = range.toList().shuffled().toTypedArray().toIntArray()
+            valueUnderTest.value = TwoSum().twoSum().joinToString()
         }) {
-            Text(text = "Longest palindromic")
+            Text(text = "Leetcode")
         }
-        Text(text = longestPalindromic.value)
+        Text(text = valueUnderTest.value)
     }
 }
 
@@ -73,10 +74,13 @@ private fun MuseumResult(museumViewData: MuseumViewData) {
         when (museumViewData) {
             is MuseumViewData.SuccessItem ->
                 MuseumListView(listOf(museumViewData.item))
+
             is MuseumViewData.SuccessSummary ->
                 MuseumSummaryView(museumViewData.summary)
+
             is MuseumViewData.Error ->
                 ErrorView(museumViewData.message)
+
             is MuseumViewData.Loading ->
                 ProgressIndicator()
         }
